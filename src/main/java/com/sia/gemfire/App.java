@@ -1,6 +1,7 @@
 package com.sia.gemfire;
 
 import com.sia.gemfire.function.MealSSRFunction;
+import com.sia.gemfire.function.MeanSSRFunctionWithTwoOQL;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
@@ -38,7 +39,7 @@ public class App
 
         List<Object> output =
                 (List<Object>) FunctionService.onRegion(region).setArguments(regionName)
-                        .execute(new MealSSRFunction()).getResult();
+                        .execute(new MeanSSRFunctionWithTwoOQL()).getResult();
 
 
         for (Object itin :  output) {

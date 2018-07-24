@@ -2,6 +2,7 @@ package com.sia.gemfire.function.object;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PassengerItinerary implements Serializable {
     private String pnrLoc;
@@ -30,7 +31,7 @@ public class PassengerItinerary implements Serializable {
     }
 
     private String cbCls;
-    private ArrayList<PassengerSSR> passengerSSR;
+    private List<PassengerSSR> passengerSSR;
 
 
     public PassengerItinerary() {
@@ -109,11 +110,11 @@ public class PassengerItinerary implements Serializable {
         this.cbCls = cbCls;
     }
 
-    public ArrayList<PassengerSSR> getPassengerSSR() {
+    public List<PassengerSSR> getPassengerSSR() {
         return passengerSSR;
     }
 
-    public void setPassengerSSR(ArrayList<PassengerSSR> passengerSSR) {
+    public void setPassengerSSR(List<PassengerSSR> passengerSSR) {
         this.passengerSSR = passengerSSR;
     }
 

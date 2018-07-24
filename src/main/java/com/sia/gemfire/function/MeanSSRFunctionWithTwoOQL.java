@@ -24,7 +24,7 @@ public class MeanSSRFunctionWithTwoOQL implements Function, Serializable {
 
     private static final org.apache.logging.log4j.Logger logger = LogService.getLogger();
 
-    private static final long serialVersionUID = -3150906692851375834L;
+    private static final long serialVersionUID = -3150906692851875839L;
 
 
     @Override
@@ -77,17 +77,40 @@ public class MeanSSRFunctionWithTwoOQL implements Function, Serializable {
 
     private List<PassengerSSR> retrieveSSRListForItin(PassengerItinerary pItin, Cache cache, FunctionContext fc) {
 
+        logger.info("Filter params on passengerSSR = > [" + pItin.getPnrLoc()
+        + ",  " + pItin.getPnrCrtnDt()
+        + ",  " + pItin.getTattooNbr()
+        + ",  " + pItin.getSegTattooNbr());
+
         String pnrLoc = pItin.getPnrLoc();
         Timestamp pnrCrtnDt = Timestamp.valueOf(pItin.getPnrCrtnDt());
-        Integer tattooNbr = Integer.getInteger(pItin.getTattooNbr());
-        Integer segTattooNbr = Integer.getInteger(pItin.getSegTattooNbr());
+        Integer tattooNbr = Integer.parseInt(pItin.getTattooNbr());
+        Integer segTattooNbr = Integer.parseInt(pItin.getSegTattooNbr());
 
-        String oql = "select c.* from /passengerSSR c where" +
-        "c.pnr_loc = " + pnrLoc +
-        "c.pnr_crtn_dt = " +  pnrCrtnDt +
-        "c.tattoo_nbr = " + tattooNbr +
-        "c.seg_tattoo_nbr = " + segTattooNbr;
+        String oql = null;
+        if(tattooNbr == null && segTattooNbr == null){
+            oql = "select * from /passengerSSR c where " +
+                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'";
+        }else if(segTattooNbr == null){
+            oql = "select * from /passengerSSR c where " +
+                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'" + " AND " +
+                    "c.tattoo_nbr=" + tattooNbr ;
+        }else if (tattooNbr == null){
+            oql = "select * from /passengerSSR c where " +
+                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'" + " AND " +
+                    "c.seg_tattoo_nbr=" + segTattooNbr ;
+        }else {
+            oql = "select * from /passengerSSR c where " +
+                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_crtn_dt=" + "'" + pnrCrtnDt + "'" + " AND " +
+                    "c.tattoo_nbr=" + tattooNbr + " AND " +
+                    "c.seg_tattoo_nbr=" + segTattooNbr ;
+        }
 
+        logger.info("OQL on passengerSSR = > " + oql);
         // Get QueryService from Cache.
         QueryService queryService = cache.getQueryService();
 
@@ -110,7 +133,7 @@ public class MeanSSRFunctionWithTwoOQL implements Function, Serializable {
             // Find the Size of the ResultSet.
             int size = results.size();
 
-            logger.info("NNNN Result Size = " + size);
+            logger.info("NNNN SSRResult Size = " + size);
             Iterator ssrIterator = results.iterator();
 
             while (ssrIterator.hasNext()) {
@@ -254,8 +277,10 @@ public class MeanSSRFunctionWithTwoOQL implements Function, Serializable {
         return false;
     }
 
+    /*
     @Override
     public Collection<ResourcePermission> getRequiredPermissions(String regionName) {
         return null;
     }
+    */
 }

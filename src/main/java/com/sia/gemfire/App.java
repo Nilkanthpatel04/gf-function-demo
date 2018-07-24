@@ -23,7 +23,7 @@ public class App
 
 
         ClientCache cache = new ClientCacheFactory()
-                .addPoolLocator("192.168.190.1", 10334).set("log-level", "WARN").create();
+                .addPoolLocator("192.168.43.180", 10334).set("log-level", "WARN").create();
 
         final String regionName = "passenger";
 
@@ -45,6 +45,7 @@ public class App
         for (Object itin :  output) {
         System.out.println("Result => "+ itin.toString());
         }
+
         cache.close();
     }
 }

@@ -90,21 +90,21 @@ public class MeanSSRFunctionWithTwoOQL implements Function, Serializable {
         String oql = null;
         if(tattooNbr == null && segTattooNbr == null){
             oql = "select * from /passengerSSR c where " +
-                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_loc = " + "'" + pnrLoc + "'" + " AND " +
                     "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'";
         }else if(segTattooNbr == null){
             oql = "select * from /passengerSSR c where " +
-                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_loc = " + "'" + pnrLoc +  "'" + " AND " +
                     "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'" + " AND " +
                     "c.tattoo_nbr=" + tattooNbr ;
         }else if (tattooNbr == null){
             oql = "select * from /passengerSSR c where " +
-                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_loc = " +  "'" + pnrLoc + "'" + " AND " +
                     "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'" + " AND " +
                     "c.seg_tattoo_nbr=" + segTattooNbr ;
         }else {
             oql = "select * from /passengerSSR c where " +
-                    "c.pnr_loc = " + pnrLoc + " AND " +
+                    "c.pnr_loc = " + "'" +  pnrLoc + "'" + " AND " +
                     "c.pnr_crtn_dt=" + "'" + pnrCrtnDt + "'" + " AND " +
                     "c.tattoo_nbr=" + tattooNbr + " AND " +
                     "c.seg_tattoo_nbr=" + segTattooNbr ;

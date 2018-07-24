@@ -1,5 +1,7 @@
 package com.sia.gemfire.function.object;
 
+import com.sia.gemfire.core.GFClientCache;
+import com.sia.gemfire.core.impl.GFClientCacheImpl;
 import com.sia.gemfire.function.MealSSRFunction;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
@@ -29,6 +31,7 @@ public class TestFunction
         // create a local region that matches the server region
         Region<Object, Object> region = cache.<Object, Object>createClientRegionFactory(ClientRegionShortcut.CACHING_PROXY)
                 .create(regionName);
+
 
         /*
         List<Object> output =

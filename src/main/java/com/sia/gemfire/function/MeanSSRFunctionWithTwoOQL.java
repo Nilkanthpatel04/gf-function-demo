@@ -91,21 +91,21 @@ public class MeanSSRFunctionWithTwoOQL implements Function, Serializable {
         if(tattooNbr == null && segTattooNbr == null){
             oql = "select * from /passengerSSR c where " +
                     "c.pnr_loc = " + "'" + pnrLoc + "'" + " AND " +
-                    "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'";
+                    "c.pnr_crtn_dt=" + "to_date('" + pnrCrtnDt + "','yyyy-MM-dd HH:mm:ss.SSS')";
         }else if(segTattooNbr == null){
             oql = "select * from /passengerSSR c where " +
                     "c.pnr_loc = " + "'" + pnrLoc +  "'" + " AND " +
-                    "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'" + " AND " +
+                    "c.pnr_crtn_dt=" + "to_date('" + pnrCrtnDt + "','yyyy-MM-dd HH:mm:ss.SSS')" + " AND " +
                     "c.tattoo_nbr=" + tattooNbr ;
         }else if (tattooNbr == null){
             oql = "select * from /passengerSSR c where " +
                     "c.pnr_loc = " +  "'" + pnrLoc + "'" + " AND " +
-                    "c.pnr_crtn_dt=" + "'" +  pnrCrtnDt + "'" + " AND " +
+                    "c.pnr_crtn_dt=" + "to_date('" + pnrCrtnDt + "','yyyy-MM-dd HH:mm:ss.SSS')" + " AND " +
                     "c.seg_tattoo_nbr=" + segTattooNbr ;
         }else {
             oql = "select * from /passengerSSR c where " +
                     "c.pnr_loc = " + "'" +  pnrLoc + "'" + " AND " +
-                    "c.pnr_crtn_dt=" + "'" + pnrCrtnDt + "'" + " AND " +
+                    "c.pnr_crtn_dt=" + "to_date('" + pnrCrtnDt + "','yyyy-MM-dd HH:mm:ss.SSS')" + " AND " +
                     "c.tattoo_nbr=" + tattooNbr + " AND " +
                     "c.seg_tattoo_nbr=" + segTattooNbr ;
         }
@@ -169,7 +169,20 @@ public class MeanSSRFunctionWithTwoOQL implements Function, Serializable {
                 }
                 else{
                     PdxInstance instance = (PdxInstance) value;
-                    logger.info("NNNN MealSSR Unexpected Case -Error Value is PdxInstance ");
+
+                    passengerSSR.setSsrTp(String.valueOf(instance.getField("ssr_tp")));
+                    passengerSSR.setSsrSt(String.valueOf(instance.getField("ssr_st")));
+                    passengerSSR.setSsrFreeTxt(String.valueOf(instance.getField("ssr_free_txt")));
+                    passengerSSR.setSsrDescription(String.valueOf(instance.getField("ssr_description")));
+                    passengerSSR.setSrcStmId(String.valueOf(instance.getField("src_stm_id")));
+                    passengerSSR.setOtTattoNbr(String.valueOf(instance.getField("ot_tattoo_nbr")));
+                    passengerSSR.setLegNo(String.valueOf(instance.getField("leg_no")));
+                    passengerSSR.setLegBdPnt(String.valueOf(instance.getField("leg_bd_pnt")));
+                    passengerSSR.setLegOffPnt(String.valueOf(instance.getField("leg_off_pnt")));
+                    passengerSSR.setSsrNbr(String.valueOf(instance.getField("ssr_number")));
+                    passengerSSR.setSsrCode(String.valueOf(instance.getField("ssr_code")));
+
+                    logger.info("NNNN MealSSR Value is PdxInstance ");
                 }
                 ssrList.add(passengerSSR);
             }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class GFClient {
+public class GFClientExample {
     public static void main(String[] args) {
         final String HOSTNAME = "35.200.251.71";
 
